@@ -31,7 +31,7 @@ on:
       build_args:
         description: 'Other args for build.py'
         required: false
-        default: ''
+        default: '--no-hinted,--ttf-only'
         type: string
 
 permissions:
@@ -48,16 +48,17 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          cache: 'pip'
-          cache-dependency-path: './requirements.txt'
+          python-version: '3.14'
+          
+#           cache: 'pip'
+#           cache-dependency-path: './requirements.txt'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Run custom script
         run: |
-          build_args="--archive"
+          # build_args="--archive"
           if [ "${{ github.event.inputs.cn }}" == "true" ]; then
             build_args="$build_args --cn"
           fi
@@ -81,6 +82,7 @@ jobs:
 
       - name: Create release
         run: |
+          tree fonts/
           echo "### Build arguments" >> NOTES
           echo "\`\`\`" >> NOTES
           echo "python build.py $BUILD_ARGS" >> NOTES
@@ -89,6 +91,6 @@ jobs:
           echo "\`\`\`" >> NOTES
           python build.py $BUILD_ARGS --dry >> NOTES
           echo "\`\`\`" >> NOTES
-          gh release create "v$(date +%s)" fonts/archive/*.* --notes-file NOTES
+          gh release create "v$(date +%s)" fonts/*.* --notes-file NOTES
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
