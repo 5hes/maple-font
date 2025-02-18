@@ -30,7 +30,7 @@ on:
         type: string
       build_args:
         description: 'Other args for build.py'
-        required: false
+        required: true
         default: '--no-hinted,--ttf-only'
         type: string
 
