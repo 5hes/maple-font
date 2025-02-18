@@ -32,7 +32,7 @@ on:
       build_args:
         description: 'Other args for build.py'
         required: false
-        default: '--no-hinted,--ttf-only'
+        default: ''
         type: string
 
 permissions:
@@ -60,6 +60,8 @@ jobs:
       - name: Run custom script
         run: |
           # build_args="--archive"
+          shopt -s globstar
+          build_args="--no-hinted,--ttf-only"
           if [ "${{ github.event.inputs.cn }}" == "true" ]; then
             build_args="$build_args --cn"
           fi
@@ -83,6 +85,7 @@ jobs:
 
       - name: Create release
         run: |
+          shopt -s globstar
           tree fonts/
           echo "### Build arguments" >> NOTES
           echo "\`\`\`" >> NOTES
