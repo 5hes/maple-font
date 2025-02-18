@@ -92,6 +92,6 @@ jobs:
           echo "\`\`\`" >> NOTES
           python build.py $BUILD_ARGS --dry >> NOTES
           echo "\`\`\`" >> NOTES
-          gh release create "v$(date +%s)" fonts/*.* --notes-file NOTES
+          gh release create "v$(date +%s)" fonts/** --notes-file NOTES
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
