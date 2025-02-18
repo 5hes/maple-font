@@ -1,6 +1,7 @@
 name: Custom Build
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       cn:
