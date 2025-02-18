@@ -61,7 +61,7 @@ jobs:
         run: |
           # build_args="--archive"
           shopt -s globstar
-          build_args="--no-hinted,--ttf-only"
+          build_args="--no-hinted --ttf-only"
           if [ "${{ github.event.inputs.cn }}" == "true" ]; then
             build_args="$build_args --cn"
           fi
